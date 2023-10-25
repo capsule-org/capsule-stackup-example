@@ -1,6 +1,8 @@
+const withTM = require('next-transpile-modules')(['@usecapsule/web-sdk', '@usecapsule/user-management-client']);
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
+  reactStrictMode: true
 }
 
-module.exports = nextConfig
+module.exports = withTM(nextConfig);
