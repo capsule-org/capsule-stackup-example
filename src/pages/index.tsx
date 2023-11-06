@@ -85,7 +85,7 @@ export default function Home() {
       const initCapsule = async () => {
         await import('@usecapsule/web-sdk').then(CapsuleModule => {
           const Capsule = CapsuleModule.default;
-          capsuleGlobal = new Capsule(Environment.BETA, undefined, {});
+          capsuleGlobal = new Capsule(Environment.DEVELOPMENT, undefined, {});
           setCapsule(capsuleGlobal);
         })
       }
