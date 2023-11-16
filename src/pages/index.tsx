@@ -46,6 +46,7 @@ const pmContext = {
 
 export default function Home() {
   const [capsule, setCapsule] = useState<Capsule | null>(null);
+  const [capsuleImportDone, setCapsuleImportDone] = useState(false);
   const [signer, setSigner] = useState(null);
   const [account, setAccount] = useState<Presets.Builder.SimpleAccount | null>(
     null
@@ -84,17 +85,23 @@ export default function Home() {
 
       const initCapsule = async () => {
         await import('@usecapsule/web-sdk').then(CapsuleModule => {
-          const Capsule = CapsuleModule.default;
-          capsuleGlobal = new Capsule(Environment.DEVELOPMENT, undefined, {});
+          const CapsuleClass = CapsuleModule.default;
+          capsuleGlobal = new CapsuleClass(Environment.DEVELOPMENT, CAPSULE_API_KEY, {});
+          console.log('set capsule')
+          console.log(capsuleGlobal)
           setCapsule(capsuleGlobal);
+          console.log(capsule)
+          setCapsuleImportDone(true);
         })
       }
 
       initCapsule()
 
     const updateLoginStatus = async () => {
+      console.log('capsule check')
       if (!capsule) return;
       const isLoggedIn = await capsule.isSessionActive();
+      console.log(isLoggedIn)
       if (isLoggedIn) {
         // Instantiate Ethers Signer
         const provider = new ethers.JsonRpcProvider(
@@ -107,16 +114,19 @@ export default function Home() {
         //   chain: chain,
         //   transport: http(rpcUrl),
         // });
-        setSigner(signer);
+        console.log(signer)
+        
         const acc = await createAccount(signer);
+        console.log(acc)
+        setSigner(signer);
         setAccount(acc)
       }
     };
-    updateLoginStatus();
+    // updateLoginStatus();
 
     const intervalId = setInterval(updateLoginStatus, 1000);
     return () => clearInterval(intervalId);
-  }, []);
+  }, [capsuleImportDone]);
 
   const createAccount = async (signer) => {
     return await Presets.Builder.SimpleAccount.init(
