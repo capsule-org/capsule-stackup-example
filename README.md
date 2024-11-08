@@ -1,3 +1,8 @@
+# ARCHIVED
+
+Please refer to the latest examples on the
+[Capsule Docs Examples Hub](https://docs.usecapsule.com/getting-started/examples)
+
 # Capsule Integration with UserOp.js Using Next.js
 
 This demonstration application illustrates how to integrate self-custodial MPC + Account Abstraction wallets with [Capsule](https://usecapsule.com/) and [userop.js](https://github.com/stackup-wallet/userop.js).
